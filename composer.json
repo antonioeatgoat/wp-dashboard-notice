@@ -1,0 +1,20 @@
+{
+    "name": "antonioeatgoat/notice-manager-for-wp-dashboard",
+    "description": "A small library to easily manage notice messages in the WordPress Dashboard",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Antonio Mangiacapra",
+            "email": "info@webbaku.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "antonioeatgoat\\nmwp\\": "src/"
+        }
+    }
+}
