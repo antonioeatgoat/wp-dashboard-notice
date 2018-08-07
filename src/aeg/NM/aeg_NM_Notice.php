@@ -2,24 +2,14 @@
 
 class aeg_NM_Notice {
 
-	/**
-	 * All the statuses (standard styles) available
-	 */
-	const STATUSES = array(
-			'info',
-			'error',
-			'success',
-			'warning'
-	);
+	const STATUS_INFO = 'info';
+	const STATUS_ERROR = 'error';
+	const STATUS_SUCCESS = 'success';
+	const STATUS_WARNING = 'warning';
 
-	/**
-	 * All the dismiss modality available
-	 */
-	const DISMISS_MODES = [
-			'none',
-			'global',
-			'user'
-	];
+	const DISMISS_NONE = 'none';
+	const DISMISS_GLOBAL = 'global';
+	const DISMISS_USER = 'user';
 
 	/**
 	 * @var string
@@ -113,19 +103,69 @@ class aeg_NM_Notice {
 
 	/**
 	 * @param string $dismiss_mode
+	 *
+	 * @return aeg_NM_Notice
 	 */
-	private function set_dismiss_mode( $dismiss_mode ) {
-		$dismiss_mode       = ( in_array( $dismiss_mode, self::DISMISS_MODES ) ) ? $dismiss_mode : self::DISMISS_MODES[0];
+	public function set_dismiss_mode( $dismiss_mode ) {
+		$dismiss_mode       = ( in_array( $dismiss_mode, self::available_dismiss_modes() ) ) ? $dismiss_mode : self::DISMISS_NONE;
 		$this->dismiss_mode = $dismiss_mode;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $anchor
+	 *
+	 * @return aeg_NM_Notice
+	 */
+	public function set_dismiss_anchor( $anchor ) {
+		$this->dismiss_anchor = $anchor;
+
+		return $this;
+	}
+
+	/**
+	 * @param string $mode
+	 * @param string $anchor
+	 *
+	 * @return aeg_NM_Notice
+	 */
+	public function set_dismiss( $mode, $anchor ) {
+		$this->set_dismiss_mode( $mode );
+		$this->set_dismiss_anchor( $anchor );
+
+		return $this;
 	}
 
 	/**
 	 * @param string $status
+	 *
+	 * @return aeg_NM_Notice
 	 */
-	private function set_status( $status ) {
-		$status       = ( in_array( $status, self::STATUSES ) ) ? $status : self::STATUSES[0];
+	public function set_status( $status ) {
+		$status       = ( in_array( $status, self::available_statuses() ) ) ? $status : self::STATUS_INFO;
 		$this->status = $status;
+
+		return $this;
 	}
 
+	private static function available_statuses() {
+		return array(
+			self::STATUS_INFO,
+			self::STATUS_ERROR,
+			self::STATUS_SUCCESS,
+			self::STATUS_WARNING
+		);
+	}
 
+	/**
+	 * @return array
+	 */
+	private static function available_dismiss_modes() {
+		return array(
+			self::DISMISS_NONE,
+			self::DISMISS_GLOBAL,
+			self::DISMISS_USER
+		);
+	}
 }
