@@ -21,8 +21,7 @@ class aeg_NM_Notice {
 			'cta_anchor'     => '',
 			'cta_href'       => '',
 			'status'         => self::STATUS_INFO,
-			'custom_class'   => '',
-			'blank_content'  => '',
+			'custom_class'   => ''
 	);
 
 	/**
@@ -44,8 +43,6 @@ class aeg_NM_Notice {
 	 *      @param string $cta_anchor     The text of the CTA button.
 	 *      @param string $status         The status of the notice [info|error|warning|success].
 	 *      @param string $custom_class   A custom class to applu to the notice.
-	 *      @param string $blank_content  An eventual HTML output that will be printed instead of the standard notice.
-	 *                                    message. This will basically make useless all other properties.
 	 * }
 	 */
 	public function __construct( $message, $args = array() ) {
@@ -118,13 +115,6 @@ class aeg_NM_Notice {
 	 */
 	public function get_custom_class() {
 		return $this->args['custom_class'];
-	}
-
-	/**
-	 * @return string
-	 */
-	public function get_blank_content() {
-		return $this->args['blank_content'];
 	}
 
 	/**
