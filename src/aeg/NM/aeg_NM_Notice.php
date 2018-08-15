@@ -12,9 +12,18 @@ class aeg_NM_Notice {
 	const DISMISS_USER = 'user';
 
 	/**
-	 * @var string
+	 * @var array
 	 */
-	private $title;
+	private $defaults = array(
+			'title'          => '',
+			'dismiss_anchor' => '',
+			'dismiss_mode'   => self::DISMISS_NONE,
+			'cta_anchor'     => '',
+			'cta_href'       => '',
+			'status'         => self::STATUS_INFO,
+			'custom_class'   => '',
+			'blank_content'  => '',
+	);
 
 	/**
 	 * @var string
@@ -22,44 +31,30 @@ class aeg_NM_Notice {
 	private $message;
 
 	/**
-	 * @var string
-	 */
-	private $dismiss_mode;
-
-	/**
-	 * @var string
-	 */
-	private $dismiss_anchor;
-
-	/**
-	 * @var string
-	 */
-	private $status;
-
-	/**
-	 * @var string
-	 */
-	private $blank_content = '';
-
-	/**
 	 * aeg_NM_Notice constructor.
 	 *
 	 * @param string $message        The message of the notice.
-	 * @param string $title          The eventual title of the notice.
-	 * @param string $dismiss_mode   How an eventual dismiss link has to work [none|global|user].
-	 * @param string $dismiss_anchor The text of the dismiss link.
-	 * @param string $status         The status of the notice [info|error|warning|success].
-	 * @param string $blank_content  An eventual HTML output that will be printed instead of the standard notice.
-	 *                               message. This will basically make useless all other properties.
+	 * @param array $args {
+	 *      Optional. An array of arguments.
+	 *
+	 *      @param string $title          The eventual title of the notice.
+	 *      @param string $dismiss_mode   How an eventual dismiss button works [none|global|user].
+	 *      @param string $dismiss_anchor The text of the dismiss button.
+	 *      @param string $cta_href       The href attribute of an eventual CTA.
+	 *      @param string $cta_anchor     The text of the CTA button.
+	 *      @param string $status         The status of the notice [info|error|warning|success].
+	 *      @param string $custom_class   A custom class to applu to the notice.
+	 *      @param string $blank_content  An eventual HTML output that will be printed instead of the standard notice.
+	 *                                    message. This will basically make useless all other properties.
+	 * }
 	 */
-	public function __construct( $message, $title = '', $dismiss_mode = '', $dismiss_anchor = '', $status = '', $blank_content = '' ) {
-		$this->message        = $message;
-		$this->title          = $title;
-		$this->dismiss_anchor = $dismiss_anchor;
-		$this->blank_content  = $blank_content;
+	public function __construct( $message, $args = array() ) {
+		$this->message = $message;
 
-		$this->set_dismiss_mode( $dismiss_mode );
-		$this->set_status( $status );
+		$this->args = wp_parse_args( $args, $this->defaults );
+
+		$this->args['dismiss_mode'] = $this->validate_dismiss_mode( $this->args['dismiss_mode'] );
+		$this->args['status']       = $this->validate_status( $this->args['status'] );
 	}
 
 	/**
@@ -72,89 +67,93 @@ class aeg_NM_Notice {
 	/**
 	 * @return string
 	 */
+	public function get_id() {
+		return $this->args['id'];
+	}
+
+	/**
+	 * @return string
+	 */
 	public function get_title() {
-		return $this->title;
+		return $this->args['title'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_dismiss_mode() {
-		return $this->dismiss_mode;
+		return $this->args['dismiss_mode'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_dismiss_anchor() {
-		return $this->dismiss_anchor;
+		return $this->args['dismiss_anchor'];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_cta_anchor() {
+		return $this->args['cta_anchor'];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_cta_href() {
+		return $this->args['cta_href'];
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_status() {
-		return $this->status;
+		return $this->args['status'];
 	}
 
+	/**
+	 * @return string
+	 */
+	public function get_custom_class() {
+		return $this->args['custom_class'];
+	}
+
+	/**
+	 * @return string
+	 */
 	public function get_blank_content() {
-		return $this->blank_content;
+		return $this->args['blank_content'];
 	}
 
 	/**
 	 * @param string $dismiss_mode
 	 *
-	 * @return aeg_NM_Notice
+	 * @return string
 	 */
-	public function set_dismiss_mode( $dismiss_mode ) {
-		$dismiss_mode       = ( in_array( $dismiss_mode, self::available_dismiss_modes() ) ) ? $dismiss_mode : self::DISMISS_NONE;
-		$this->dismiss_mode = $dismiss_mode;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $anchor
-	 *
-	 * @return aeg_NM_Notice
-	 */
-	public function set_dismiss_anchor( $anchor ) {
-		$this->dismiss_anchor = $anchor;
-
-		return $this;
-	}
-
-	/**
-	 * @param string $mode
-	 * @param string $anchor
-	 *
-	 * @return aeg_NM_Notice
-	 */
-	public function set_dismiss( $mode, $anchor ) {
-		$this->set_dismiss_mode( $mode );
-		$this->set_dismiss_anchor( $anchor );
-
-		return $this;
+	public function validate_dismiss_mode( $dismiss_mode ) {
+		return ( in_array( $dismiss_mode, self::available_dismiss_modes() ) ) ? $dismiss_mode : self::DISMISS_NONE;
 	}
 
 	/**
 	 * @param string $status
 	 *
-	 * @return aeg_NM_Notice
+	 * @return string
 	 */
-	public function set_status( $status ) {
-		$status       = ( in_array( $status, self::available_statuses() ) ) ? $status : self::STATUS_INFO;
-		$this->status = $status;
-
-		return $this;
+	public function validate_status( $status ) {
+		return ( in_array( $status, self::available_statuses() ) ) ? $status : self::STATUS_INFO;
 	}
 
+	/**
+	 * @return array
+	 */
 	private static function available_statuses() {
 		return array(
-			self::STATUS_INFO,
-			self::STATUS_ERROR,
-			self::STATUS_SUCCESS,
-			self::STATUS_WARNING
+				self::STATUS_INFO,
+				self::STATUS_ERROR,
+				self::STATUS_SUCCESS,
+				self::STATUS_WARNING
 		);
 	}
 
@@ -163,9 +162,9 @@ class aeg_NM_Notice {
 	 */
 	private static function available_dismiss_modes() {
 		return array(
-			self::DISMISS_NONE,
-			self::DISMISS_GLOBAL,
-			self::DISMISS_USER
+				self::DISMISS_NONE,
+				self::DISMISS_GLOBAL,
+				self::DISMISS_USER
 		);
 	}
 }
