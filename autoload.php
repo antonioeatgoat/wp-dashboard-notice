@@ -11,14 +11,14 @@
  */
 function nmwp_autoload($class) {
 
-    if ( false !== strpos( $class, 'aeg_NM_' ) ) {
+    if ( false === strpos( $class, 'aeg_NM_' ) ) {
         return false;
     }
 
     $directory_path = dirname(__FILE__) . '/src/';
     $file_name      = str_replace('_', DIRECTORY_SEPARATOR, $class);
 
-    include $directory_path . $file_name;
+    include $directory_path . $file_name . '.php';
 
     return true;
 
