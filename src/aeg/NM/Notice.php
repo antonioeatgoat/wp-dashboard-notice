@@ -37,7 +37,7 @@ class aeg_NM_Notice {
 	/**
 	 * aeg_NM_Notice constructor.
 	 *
-	 * @param string $id             A unique identified for the notice message
+	 * @param string $id             An unique identified for the notice message
 	 * @param string $message        The message of the notice.
 	 * @param array $args {
 	 *      Optional. An array of arguments.
@@ -72,7 +72,7 @@ class aeg_NM_Notice {
 	 * @return string
 	 */
 	public function get_id() {
-		return $this->args['id'];
+		return $this->id;
 	}
 
 	/**
