@@ -25,6 +25,11 @@ class aeg_NM_Notice {
 	);
 
 	/**
+	 * @var string A unique identifier for the notice message
+	 */
+	private $id;
+
+	/**
 	 * @var string
 	 */
 	private $message;
@@ -32,6 +37,7 @@ class aeg_NM_Notice {
 	/**
 	 * aeg_NM_Notice constructor.
 	 *
+	 * @param string $id             A unique identified for the notice message
 	 * @param string $message        The message of the notice.
 	 * @param array $args {
 	 *      Optional. An array of arguments.
@@ -45,7 +51,8 @@ class aeg_NM_Notice {
 	 *      @param string $custom_class   A custom class to applu to the notice.
 	 * }
 	 */
-	public function __construct( $message, $args = array() ) {
+	public function __construct( $id, $message, $args = array() ) {
+		$this->id      = $id;
 		$this->message = $message;
 
 		$this->args = wp_parse_args( $args, $this->defaults );
