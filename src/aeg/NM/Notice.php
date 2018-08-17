@@ -99,6 +99,13 @@ class aeg_NM_Notice {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function get_dismiss_url() {
+		return esc_url( wp_nonce_url( add_query_arg( aeg_NM_NoticesManager::DISMISS_QUERY_ARG, $this->get_id() ), aeg_NM_NoticesManager::DISMISS_QUERY_ARG . '-' . get_current_user_id() ) );
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function get_show_close_btn() {
