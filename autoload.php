@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 define( 'AEG_NM_DIRPATH', dirname(__FILE__) . '/src/');
 
 /**

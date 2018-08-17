@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class aeg_NM_Notice {
 
 	const STATUS_INFO = 'info';
