@@ -4,6 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class aeg_NM_NoticesManager
+ *
+ * It lists all the existing notices and checks when notices have to be displayed or dismissed.
+ */
 final class aeg_NM_NoticesManager {
 
 	const DISMISS_QUERY_ARG = 'aeg-notice-manager-dismiss';
