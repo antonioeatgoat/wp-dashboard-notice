@@ -18,6 +18,7 @@ class aeg_NM_Notice {
 			'title'          => '',
 			'dismiss_anchor' => '',
 			'dismiss_mode'   => self::DISMISS_NONE,
+			'show_close_btn' => false,
 			'cta_anchor'     => '',
 			'cta_href'       => '',
 			'status'         => self::STATUS_INFO,
@@ -45,6 +46,7 @@ class aeg_NM_Notice {
 	 *      @param string $title          The eventual title of the notice.
 	 *      @param string $dismiss_mode   How an eventual dismiss button works [none|global|user].
 	 *      @param string $dismiss_anchor The text of the dismiss button.
+	 *      @param bool   $show_close_btn Show the button to close the notice (not permanent dismiss)
 	 *      @param string $cta_href       The href attribute of an eventual CTA.
 	 *      @param string $cta_anchor     The text of the CTA button.
 	 *      @param string $status         The status of the notice [info|error|warning|success].
@@ -94,6 +96,13 @@ class aeg_NM_Notice {
 	 */
 	public function get_dismiss_anchor() {
 		return $this->args['dismiss_anchor'];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function get_show_close_btn() {
+		return (bool) $this->args['show_close_btn'];
 	}
 
 	/**
