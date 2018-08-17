@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-final class aeg_NM_NoticeRenderer {
+class aeg_NM_NoticeRenderer {
 
 	/**
 	 * @var aeg_NM_Notice
