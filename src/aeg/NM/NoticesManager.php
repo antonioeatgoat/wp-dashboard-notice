@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 final class aeg_NM_NoticesManager {
 
 	const DISMISS_QUERY_ARG = 'aeg-notice-manager-dismiss';
