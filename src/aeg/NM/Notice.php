@@ -4,6 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class aeg_NM_Notice
+ *
+ * The actual notice that will be displayed in the dashboard.
+ */
 class aeg_NM_Notice {
 
 	const STATUS_INFO = 'info';

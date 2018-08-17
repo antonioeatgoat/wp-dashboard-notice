@@ -4,6 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class aeg_NM_NoticeFactory
+ */
 class aeg_NM_NoticeFactory {
 
 	/**

@@ -4,6 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Class aeg_NM_NoticeRenderer
+ *
+ * It takes care of the displaying of a single given notice on the dashboard page
+ */
 class aeg_NM_NoticeRenderer {
 
 	/**
