@@ -30,7 +30,7 @@ if ( $notice->get_show_close_btn() ) {
 			<?php endif; ?>
 			<?php if ( $notice->get_dismiss_anchor() && 'none' !== $notice->get_dismiss_mode() ): ?>
                 <a class="button button-link"
-                   href="todo link here"><?php echo $notice->get_dismiss_anchor(); ?></a>
+                   href="<?php echo $notice->get_dismiss_url(); ?>"><?php echo $notice->get_dismiss_anchor(); ?></a>
 			<?php endif; ?>
 
         </p>
