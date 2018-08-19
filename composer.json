@@ -13,8 +13,8 @@
         "php": ">5.2"
     },
     "autoload": {
-        "psr-4": {
-            "antonioeatgoat\\nmwp\\": "src/"
+        "psr-0": {
+            "aeg_NM_": "src/"
         }
     }
 }
