@@ -4,8 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AEG_NM_DIRPATH', dirname(__FILE__) . '/src/');
-
 /**
  * Autoload the classes of the plugin.
  * At the current moment it autoload only the classes present in the ST_CLASSES_PATH folder, but not in ST_ADMIN_PATH
@@ -21,9 +19,10 @@ function nmwp_autoload($class) {
         return false;
     }
 
+    $directory_path = dirname(__FILE__) . '/src/';
     $file_name      = str_replace('_', DIRECTORY_SEPARATOR, $class);
 
-    include AEG_NM_DIRPATH . $file_name . '.php';
+    include $directory_path . $file_name . '.php';
 
     return true;
 
