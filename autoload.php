@@ -5,10 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Autoload the classes of the plugin.
- * At the current moment it autoload only the classes present in the ST_CLASSES_PATH folder, but not in ST_ADMIN_PATH
+ * Autoload the classes of the plugin. It's the backup autoload system for who cannot use the composer autoload system.
  *
- * @todo change doc and check if add a if file_exists before include
  * @param  string $class
  *
  * @return bool
@@ -22,10 +20,14 @@ function nmwp_autoload($class) {
     $directory_path = dirname(__FILE__) . '/src/';
     $file_name      = str_replace('_', DIRECTORY_SEPARATOR, $class);
 
-    include $directory_path . $file_name . '.php';
+    $file = $directory_path . $file_name . '.php';
 
-    return true;
+    if( file_exists( $file ) ) {
+	    include $directory_path . $file_name . '.php';
+	    return true;
+    }
 
+    return false;
 }
 
 spl_autoload_register('nmwp_autoload');
