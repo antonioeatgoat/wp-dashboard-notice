@@ -26,7 +26,7 @@ class aeg_NM_NoticeRenderer {
 	public function __construct( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
 		$this->notice   = $notice;
 		$this->priority = (int) $priority;
-		$this->template = ( empty ( $template ) ) ? AEG_NM_DIRPATH . '/templates/notice.php' : (string) $template;
+		$this->template = ( empty ( $template ) ) ? dirname(__FILE__) . '/../../templates/notice.php' : (string) $template;
 	}
 
 	/**
