@@ -5,18 +5,7 @@ A small library to easily manage notice messages in the WordPress dashboard
 Use [Composer](https://getcomposer.org/) to require the library. The package isn't available on Packagist yet, so you have to include its url in your composer file manually:
 
 ```bash
-{
-  "name": "Your project",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/antonioeatgoat/notice-manager-for-wp-dashboard"
-    }
-  ],
-  "require": {
-    "antonioeatgoat/notice-manager-for-wp-dashboard":"dev-master"
-  }
-}
+composer require antonioeatgoat/notice-manager-for-wp-dashboard
 ```
 
 Then include the [Composer](https://getcomposer.org/) autoload file in your project::
@@ -49,3 +38,30 @@ $notice = ( new aeg_NM_NoticeFactory() )->create(
 	));
 aeg_NM_NoticesManager::init()->add($notice);
 ```
+## Parameters
+The notice creations needs three parameters:
+- **id:** *(string)* An unique id to identificate it (it is also used as an id attribute in the HTML of the notice message printed).
+- **message:** *(string)* The actual notice message.
+- **args:** *(array)* Optional. An array of parameters containing more configurations.
+
+Here's how the configurations can be used.
+
+### Custom CTA
+You can print the custom CTA button using these arguments, both of them are required to display the CTA.
+- **cta_anchor:** The text of the button.
+- **cta_href:** The link where the CTA points to.
+
+### Permanent dismissing
+The notice message can be dismissed in a permanent way, clicking on a specific link. It supports three dismissing modes:
+- **none:** *(default)* Notice message cannot be dismissed and dismissing link isn't displayed.
+- **global:** Once dismissed, the notice message isn't shown again for nobody.
+- **user:** Once dismissed, the notice message is dismissed only for the current user. Other users will continue to see it.
+
+You can print the dismissing link using these arguments, both of them are required to display the link.
+- **dismiss_anchor:** The text of the link.
+- **dismiss_mode:** The dismissing mode explained above.
+
+### Others
+Others arguments of the array parameter are:
+- **status:** The status the notice message. Available values are *"info" (default)*, *"success"*, *"warning"*, *"error"*.
+- **show_close_btn:** *(bool)* Default *false*. If a button to close the notice message is displayed. **Notce:** This will only close the notice, not dismiss it. On the page refresh it will be displayed again if the code requires it. This is useful when you have a "single time" notice message. That haven't stands permanently on the page, such as the notice message "Plugin activated" when you active a plugin.
