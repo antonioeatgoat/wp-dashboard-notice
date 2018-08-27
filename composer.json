@@ -1,5 +1,5 @@
 {
-    "name": "antonioeatgoat/notice-manager-for-wp-dashboard",
+    "name": "antonioeatgoat/wp-dashboard-notice",
     "description": "A small library to easily manage notice messages in the WordPress Dashboard",
     "type": "library",
     "authors": [
