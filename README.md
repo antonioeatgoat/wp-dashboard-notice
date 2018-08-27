@@ -5,7 +5,7 @@ A small library to easily manage notice messages in the WordPress dashboard
 Use [Composer](https://getcomposer.org/) to require the library.
 
 ```bash
-composer require antonioeatgoat/notice-manager-for-wp-dashboard
+composer require antonioeatgoat/wp-dashboard-notice
 ```
 
 Then include the [Composer](https://getcomposer.org/) autoload file in your project::
@@ -14,13 +14,13 @@ Then include the [Composer](https://getcomposer.org/) autoload file in your proj
 require_once 'vendor/autoload.php'
 ```
 
-If that's not an option then clone or download the package and require the `notice-manager-for-wp-dashboard/autoload.php` file in your code:
+If that's not an option then clone or download the package and require the `wp-dashboard-notice/autoload.php` file in your code:
 
 ```php
-require_once 'path/to/notice-manager-for-wp-dashboard/autoload.php';
+require_once 'path/to/wp-dashboard-notice/autoload.php';
 ```
 
-Where `path/to/notice-manager-for-wp-dashboard/autoload.php` is the absolute path to the `autoload.php` file.
+Where `path/to/wp-dashboard-notice/autoload.php` is the absolute path to the `autoload.php` file.
 
 ## Example
 
