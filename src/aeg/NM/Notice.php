@@ -154,7 +154,7 @@ class aeg_NM_Notice {
 	 *
 	 * @return string
 	 */
-	public function validate_dismiss_mode( $dismiss_mode ) {
+	private function validate_dismiss_mode( $dismiss_mode ) {
 		return ( in_array( $dismiss_mode, self::available_dismiss_modes() ) ) ? $dismiss_mode : self::DISMISS_NONE;
 	}
 
@@ -163,7 +163,7 @@ class aeg_NM_Notice {
 	 *
 	 * @return string
 	 */
-	public function validate_status( $status ) {
+	private function validate_status( $status ) {
 		return ( in_array( $status, self::available_statuses() ) ) ? $status : self::STATUS_INFO;
 	}
 
