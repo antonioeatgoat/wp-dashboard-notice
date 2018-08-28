@@ -9,6 +9,14 @@
         }
     ],
     "minimum-stability": "dev",
+    "scripts": {
+        "test": "phpunit",
+        "coverage": "phpunit --coverage-html tests/coverage"
+    },
+    "require-dev": {
+        "10up/wp_mock": "dev-dev",
+        "phpunit/phpunit": "^7.4"
+    },
     "require": {
         "php": ">5.2"
     },
