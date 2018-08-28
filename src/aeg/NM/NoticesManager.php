@@ -17,6 +17,11 @@ final class aeg_NM_NoticesManager {
 
 	private $notices = [];
 
+	/**
+	 * @return aeg_NM_NoticesManager
+	 *
+	 * @codeCoverageIgnore
+	 */
 	public static function init() {
 		static $instance = null;
 
@@ -27,6 +32,11 @@ final class aeg_NM_NoticesManager {
 		return $instance;
 	}
 
+	/**
+	 * aeg_NM_NoticesManager constructor.
+	 *
+	 * @codeCoverageIgnore
+	 */
 	private function __construct() {
 		add_action( 'admin_head', array( $this, 'notices_dismiss_listener' ) );
 		add_action( 'admin_head', array( $this, 'print_notices' ) );

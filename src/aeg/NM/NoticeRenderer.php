@@ -31,6 +31,8 @@ class aeg_NM_NoticeRenderer {
 
 	/**
 	 * Hooks the notice message to WordPress
+	 *
+	 * @codeCoverageIgnore
 	 */
 	public function render() {
 		add_action( 'admin_notices', array( $this, 'print_notice_html' ), $this->priority );
