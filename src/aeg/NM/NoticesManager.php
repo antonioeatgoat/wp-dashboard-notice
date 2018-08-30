@@ -18,18 +18,30 @@ final class aeg_NM_NoticesManager {
 	private $notices = [];
 
 	/**
+	 * @var aeg_NM_NoticesManager|null
+	 */
+	private static $instance = null;
+
+	/**
 	 * @return aeg_NM_NoticesManager
 	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function init() {
-		static $instance = null;
-
-		if ( null === $instance ) {
-			$instance = new aeg_NM_NoticesManager();
+		if ( null === self::$instance ) {
+			self::$instance = new aeg_NM_NoticesManager();
 		}
 
-		return $instance;
+		return self::$instance;
+	}
+
+	/**
+	 * Destroys the singleton instance
+	 *
+	 * @codeCoverageIgnore
+	 */
+	public static function destroy() {
+		self::$instance = null;
 	}
 
 	/**
@@ -75,13 +87,13 @@ final class aeg_NM_NoticesManager {
 	 */
 	public function notices_dismiss_listener() {
 		if ( ! isset( $_GET[ self::DISMISS_QUERY_ARG ] ) || ! check_admin_referer( self::DISMISS_QUERY_ARG . '-' . get_current_user_id() ) ) {
-			return;
+			return false;
 		}
 
 		$notice = $this->get_notice( $_GET[ self::DISMISS_QUERY_ARG ] );
 
 		if ( ! $notice instanceof aeg_NM_Notice ) {
-			return;
+			return false;
 		}
 
 		if ( aeg_NM_Notice::DISMISS_GLOBAL === $notice->get_dismiss_mode() ) {
@@ -90,6 +102,7 @@ final class aeg_NM_NoticesManager {
 			$this->dismiss_user_notice( $notice->get_id() );
 		}
 
+		return true;
 	}
 
 	/**
@@ -97,7 +110,7 @@ final class aeg_NM_NoticesManager {
 	 *
 	 * @return null|aeg_NM_Notice
 	 */
-	private function get_notice( $notice_id ) {
+	public function get_notice( $notice_id ) {
 		if ( isset( $this->notices[ $notice_id ] ) ) {
 			return $this->notices[ $notice_id ]['notice'];
 		}
