@@ -22,7 +22,11 @@ $dismiss_button_css = ( $cta_button_exists ) ? 'button-cancel' : 'link-text';
 
 <div id="<?php echo esc_attr( $notice->get_id() ); ?>"
      class="aeg-notice notice <?php echo $css_clases; ?>">
-    <p><?php echo $notice->get_message(); ?></p>
+	<?php if ( $notice->get_title() ): ?>
+        <p class="aeg-notice__title"><strong><?php echo $notice->get_title(); ?></strong></p>
+	<?php endif; ?>
+
+    <p class="aeg-notice__message"><?php echo $notice->get_message(); ?></p>
 
 	<?php if ( $cta_button_exists || $dismiss_button_exists ): ?>
         <p class="aeg-notice__buttons">
