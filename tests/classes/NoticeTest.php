@@ -150,4 +150,91 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 
 		$this->assertContains( $expected, $test->get_dismiss_url() );
 	}
+
+	public function test_useless_dismiss() {
+		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message' );
+
+		$this->assertEquals( 0, $test->dismiss() );
+	}
+
+	public function test_dismiss_by_user() {
+		$test1 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test2 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'user' ] );
+
+		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
+
+		\WP_Mock::userFunction( 'get_user_meta', array(
+				'return_in_order' => array( false, [ 'notice-test-1' ] )
+		) );
+
+		\WP_Mock::userFunction( 'update_user_meta', array(
+				'times' => 2,
+				'return' => true
+		) );
+
+		$this->assertTrue( $test1->dismiss() );
+		$this->assertTrue( $test2->dismiss() );
+	}
+
+	public function test_dismiss_by_global() {
+		$test1 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test2 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'global' ] );
+
+		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
+
+		\WP_Mock::userFunction( 'get_option', array(
+				'return_in_order' => array( false, [ 'notice-test-1' ] )
+		) );
+
+		WP_Mock::userFunction( 'update_option', array(
+				'times' => 2,
+				'return' => true
+		) );
+
+		$this->assertTrue( $test1->dismiss() );
+
+		$this->assertTrue( $test2->dismiss() );
+	}
+
+	public function test_is_dismiss_by_user() {
+		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'user' ] );
+
+		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
+
+		\WP_Mock::userFunction( 'get_user_meta', array(
+				'return_in_order' => array( false, [ 'notice-test' ] )
+		) );
+
+		\WP_Mock::userFunction( 'update_user_meta', array(
+				'times' => 1,
+				'return' => true
+		) );
+
+		$this->assertFalse( $test->is_dismissed() );
+
+		$test->dismiss();
+
+		$this->assertTrue( $test->is_dismissed() );
+	}
+
+	public function test_is_dismiss_by_global() {
+		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'global' ] );
+
+		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
+
+		\WP_Mock::userFunction( 'get_option', array(
+				'return_in_order' => array( false, [ 'notice-test' ] )
+		) );
+
+		\WP_Mock::userFunction( 'update_option', array(
+				'times' => 1,
+				'return' => true
+		) );
+
+		$this->assertFalse( $test->is_dismissed() );
+
+		$test->dismiss();
+
+		$this->assertTrue( $test->is_dismissed() );
+	}
 }
