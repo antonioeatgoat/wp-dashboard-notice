@@ -150,6 +150,59 @@ class aeg_NM_Notice {
 	}
 
 	/**
+	 * Dismisses the current notice, if it is dismissible, based on its params
+	 *
+	 * @return bool|int. True if the notice has been dismissed. False if it failed. 0 if the notice wasn't dismissible
+	 */
+	public function dismiss() {
+		if( self::DISMISS_NONE === $this->get_dismiss_mode() ) {
+			return 0;
+		}
+
+		$dismissed_notices = aeg_NM_NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
+		$new_option = array_merge( $dismissed_notices, array( $this->get_id() ) );
+
+		if ( self::DISMISS_GLOBAL === $this->get_dismiss_mode() ) {
+			return $this->dismiss_global_notice( $new_option );
+		}
+
+		// The only other possible case is self::DISMISS_USER
+		return $this->dismiss_user_notice( $new_option );
+
+	}
+
+	/**
+	 * @param array $new_option
+	 *
+	 * @return bool
+	 */
+	private function dismiss_global_notice( $new_option ) {
+		return update_option( aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option, false );
+	}
+
+	/**
+	 * @param array $new_option
+	 *
+	 * @return bool
+	 */
+	private function dismiss_user_notice( $new_option ) {
+		return (bool)update_user_meta( get_current_user_id(), aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option );
+	}
+
+	/**
+	 * Checks if a the notice can be shown to the current user
+	 *
+	 * @return bool
+	 */
+	public function is_dismissed() {
+		$dismissed_notices = aeg_NM_NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
+
+		$is_dismissed = ( in_array( $this->get_id(), $dismissed_notices ) );
+
+		return apply_filters( 'aeg_nm_is_notice_dismissed', $is_dismissed );
+	}
+
+	/**
 	 * @param string $dismiss_mode
 	 *
 	 * @return string

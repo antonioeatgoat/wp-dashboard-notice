@@ -72,7 +72,7 @@ final class aeg_NM_NoticesManager {
 	 */
 	public function print_notices() {
 		foreach ( $this->notices as $notice_data ) {
-			if ( ! $this->is_dismissed( $notice_data['notice'] ) ) {
+			if ( ! $notice_data['notice']->is_dismissed() ) {
 				$rendered = new aeg_NM_NoticeRenderer( $notice_data['notice'], $notice_data['priority'], $notice_data['template'] );
 				$rendered->render();
 			}
@@ -96,11 +96,7 @@ final class aeg_NM_NoticesManager {
 			return false;
 		}
 
-		if ( aeg_NM_Notice::DISMISS_GLOBAL === $notice->get_dismiss_mode() ) {
-			$this->dismiss_global_notice( $notice->get_id() );
-		} else if ( aeg_NM_Notice::DISMISS_USER === $notice->get_dismiss_mode() ) {
-			$this->dismiss_user_notice( $notice->get_id() );
-		}
+		$notice->dismiss();
 
 		return true;
 	}
@@ -119,48 +115,22 @@ final class aeg_NM_NoticesManager {
 	}
 
 	/**
-	 * @param string $notice_id
-	 */
-	private function dismiss_global_notice( $notice_id ) {
-		$dismissed_notices = get_option( self::DISMISSED_NOTICES_OPTION );
-
-		if ( ! $dismissed_notices ) {
-			$new_option = array( $notice_id );
-		} else {
-			$new_option = array_merge( $dismissed_notices, array( $notice_id ) );
-		}
-
-		update_option( self::DISMISSED_NOTICES_OPTION, $new_option, false );
-	}
-
-	/**
-	 * @param string $notice_id
-	 */
-	private function dismiss_user_notice( $notice_id ) {
-		update_user_meta( get_current_user_id(), self::DISMISSED_NOTICES_OPTION, $notice_id );
-	}
-
-	/**
-	 * Checks if a given notice can be showed to the current user
+	 * Returns an array containing the dismissed notices ids, based on the dismiss mode passed and eventually the
+	 * current user
 	 *
-	 * @param aeg_NM_Notice $notice
+	 * @param string $dismiss_mode
 	 *
-	 * @return bool
+	 * @return array
 	 */
-	private function is_dismissed( aeg_NM_Notice $notice ) {
-		$is_dismissed      = false;
-		$dismissed_notices = [];
+	public static function get_dismissed_options( $dismiss_mode ) {
+		$dismissed_notices = array();
 
-		if ( aeg_NM_Notice::DISMISS_GLOBAL === $notice->get_dismiss_mode() ) {
+		if ( aeg_NM_Notice::DISMISS_GLOBAL === $dismiss_mode ) {
 			$dismissed_notices = get_option( self::DISMISSED_NOTICES_OPTION );
-		} else if ( aeg_NM_Notice::DISMISS_USER === $notice->get_dismiss_mode() ) {
-			$dismissed_notices = get_user_meta( get_current_user_id(), self::DISMISSED_NOTICES_OPTION );
+		} else if ( aeg_NM_Notice::DISMISS_USER === $dismiss_mode ) {
+			$dismissed_notices = get_user_meta( get_current_user_id(), self::DISMISSED_NOTICES_OPTION, true );
 		}
 
-		if ( is_array( $dismissed_notices ) && in_array( $notice->get_id(), $dismissed_notices ) ) {
-			$is_dismissed = true;
-		}
-
-		return apply_filters( 'aeg_nm_is_notice_dismissed', $is_dismissed );
+		return ( is_array( $dismissed_notices ) ) ? $dismissed_notices : array();
 	}
 }
