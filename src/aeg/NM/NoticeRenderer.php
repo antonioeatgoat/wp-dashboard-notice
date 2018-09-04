@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class aeg_NM_NoticeRenderer
- *
  * It takes care of the displaying of a single given notice on the dashboard page
  */
 class aeg_NM_NoticeRenderer {
@@ -32,10 +30,16 @@ class aeg_NM_NoticeRenderer {
 	/**
 	 * Hooks the notice message to WordPress
 	 *
-	 * @codeCoverageIgnore
+	 * @return bool
 	 */
 	public function render() {
+		if( $this->notice->is_dismissed() ) {
+			return false;
+		}
+
 		add_action( 'admin_notices', array( $this, 'print_notice_html' ), $this->priority );
+
+		return true;
 	}
 
 	/**

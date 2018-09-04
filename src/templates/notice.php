@@ -17,34 +17,29 @@ if ( $notice->get_show_close_btn() ) {
 
 $cta_button_exists     = ( $notice->get_cta_anchor() && $notice->get_cta_href() );
 $dismiss_button_exists = ( $notice->get_dismiss_anchor() && 'none' !== $notice->get_dismiss_mode() );
-$dismiss_button_css = ( $cta_button_exists ) ? 'button-cancel' : 'link-text';
+$dismiss_button_css    = ( $cta_button_exists ) ? 'button-cancel' : 'link-text';
 ?>
-
-<div id="<?php echo esc_attr( $notice->get_id() ); ?>"
-     class="aeg-notice notice <?php echo $css_clases; ?>">
+<div id="<?php echo esc_attr( $notice->get_id() ); ?>" class="aeg-notice notice <?php echo $css_clases; ?>">
 	<?php if ( $notice->get_title() ): ?>
-        <p class="aeg-notice__title"><strong><?php echo $notice->get_title(); ?></strong></p>
+		<p class="aeg-notice__title"><strong><?php echo $notice->get_title(); ?></strong></p>
 	<?php endif; ?>
-
-    <p class="aeg-notice__message"><?php echo $notice->get_message(); ?></p>
-
+	<p class="aeg-notice__message"><?php echo $notice->get_message(); ?></p>
 	<?php if ( $cta_button_exists || $dismiss_button_exists ): ?>
-        <p class="aeg-notice__buttons">
+		<p class="aeg-notice__buttons">
 
 			<?php if ( $cta_button_exists ): ?>
-                <a href="<?php echo $notice->get_cta_href() ?>"
-                   class="button-primary"><?php echo $notice->get_cta_anchor(); ?></a>
+				<a href="<?php echo $notice->get_cta_href() ?>"
+				   class="button-primary"><?php echo $notice->get_cta_anchor(); ?></a>
 			<?php endif; ?>
 			<?php if ( $dismiss_button_exists ): ?>
-                <a class="<?php echo $dismiss_button_css; ?>"
-                   href="<?php echo $notice->get_dismiss_url(); ?>"><?php echo $notice->get_dismiss_anchor(); ?></a>
+				<a class="<?php echo $dismiss_button_css; ?>"
+				   href="<?php echo $notice->get_dismiss_url(); ?>"><?php echo $notice->get_dismiss_anchor(); ?></a>
 			<?php endif; ?>
 
-        </p>
+		</p>
 	<?php endif; ?>
-
 	<?php if ( $notice->get_show_close_btn() ): ?>
-        <button type="button" class="notice-dismiss"><span
-                    class="screen-reader-text"><?php _e( 'Dismiss this notice.' ); ?></span></button>
+		<button type="button" class="notice-dismiss"><span
+					class="screen-reader-text"><?php _e( 'Dismiss this notice.' ); ?></span></button>
 	<?php endif; ?>
 </div>
