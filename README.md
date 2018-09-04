@@ -30,7 +30,7 @@ $notice = ( new aeg_NM_NoticeFactory() )->create(
 	'<strong>Hello World</strong> - This is a sample notice',
 	array(
 		'show_close_btn' => true,
-		'cta_anchor'     => 'This is a custom CTA!',
+		'cta_text'     => 'This is a custom CTA!',
 		'cta_href'       => '#',
 		'dismiss_text' => "Don't show it again",
 		'dismiss_mode'   => 'global',
@@ -48,7 +48,7 @@ Here's how the configurations can be used.
 
 ### Custom CTA
 You can print the custom CTA button using these arguments, both of them are required to display the CTA.
-- **cta_anchor:** The text of the button.
+- **cta_text:** The text of the button.
 - **cta_href:** The link where the CTA points to.
 
 ### Permanent dismissing

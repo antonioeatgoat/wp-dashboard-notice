@@ -14,7 +14,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 			'dismiss_text'   => '',
 			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
 			'show_close_btn' => false,
-			'cta_anchor'     => '',
+			'cta_text'     => '',
 			'cta_href'       => '',
 			'status'         => aeg_NM_Notice::STATUS_INFO,
 			'custom_class'   => ''
@@ -63,11 +63,11 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		$this->assertTrue( $test->get_show_close_btn() );
 	}
 
-	public function test_get_cta_anchor() {
+	public function test_get_cta_text() {
 		$expected = 'This is a CTA';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_anchor' => $expected ] );
+		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_text' => $expected ] );
 
-		$this->assertEquals( $expected, $test->get_cta_anchor() );
+		$this->assertEquals( $expected, $test->get_cta_text() );
 	}
 
 	public function test_get_cta_href() {

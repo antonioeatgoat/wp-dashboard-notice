@@ -15,7 +15,7 @@ if ( $notice->get_show_close_btn() ) {
 	$css_clases .= ' is-dismissible';
 }
 
-$cta_button_exists     = ( $notice->get_cta_anchor() && $notice->get_cta_href() );
+$cta_button_exists     = ( $notice->get_cta_text() && $notice->get_cta_href() );
 $dismiss_button_exists = ( $notice->get_dismiss_text() && 'none' !== $notice->get_dismiss_mode() );
 $dismiss_button_css    = ( $cta_button_exists ) ? 'button-cancel' : 'link-text';
 ?>
@@ -29,7 +29,7 @@ $dismiss_button_css    = ( $cta_button_exists ) ? 'button-cancel' : 'link-text';
 
 			<?php if ( $cta_button_exists ): ?>
 				<a href="<?php echo $notice->get_cta_href() ?>"
-				   class="button-primary"><?php echo $notice->get_cta_anchor(); ?></a>
+				   class="button-primary"><?php echo $notice->get_cta_text(); ?></a>
 			<?php endif; ?>
 			<?php if ( $dismiss_button_exists ): ?>
 				<a class="<?php echo $dismiss_button_css; ?>"

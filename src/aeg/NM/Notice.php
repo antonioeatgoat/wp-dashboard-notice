@@ -26,7 +26,7 @@ class aeg_NM_Notice {
 			'dismiss_text'   => '',
 			'dismiss_mode'   => self::DISMISS_NONE,
 			'show_close_btn' => false,
-			'cta_anchor'     => '',
+			'cta_text'       => '',
 			'cta_href'       => '',
 			'status'         => self::STATUS_INFO,
 			'custom_class'   => ''
@@ -122,8 +122,8 @@ class aeg_NM_Notice {
 	/**
 	 * @return string
 	 */
-	public function get_cta_anchor() {
-		return $this->args['cta_anchor'];
+	public function get_cta_text() {
+		return $this->args['cta_text'];
 	}
 
 	/**
