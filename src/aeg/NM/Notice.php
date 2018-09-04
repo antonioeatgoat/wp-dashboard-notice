@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class aeg_NM_Notice
- *
  * The actual notice that will be displayed in the dashboard.
  */
 class aeg_NM_Notice {

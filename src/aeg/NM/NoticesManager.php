@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class aeg_NM_NoticesManager
- *
  * It lists all the existing notices and checks when notices have to be displayed or dismissed.
  */
 final class aeg_NM_NoticesManager {
@@ -72,10 +70,8 @@ final class aeg_NM_NoticesManager {
 	 */
 	public function print_notices() {
 		foreach ( $this->notices as $notice_data ) {
-			if ( ! $notice_data['notice']->is_dismissed() ) {
-				$rendered = new aeg_NM_NoticeRenderer( $notice_data['notice'], $notice_data['priority'], $notice_data['template'] );
-				$rendered->render();
-			}
+			$rendered = new aeg_NM_NoticeRenderer( $notice_data['notice'], $notice_data['priority'], $notice_data['template'] );
+			$rendered->render();
 		}
 	}
 
