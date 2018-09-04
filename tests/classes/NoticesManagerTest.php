@@ -14,7 +14,7 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 			'dismiss_text'   => '',
 			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
 			'show_close_btn' => false,
-			'cta_anchor'     => '',
+			'cta_text'     => '',
 			'cta_href'       => '',
 			'status'         => aeg_NM_Notice::STATUS_INFO,
 			'custom_class'   => ''
