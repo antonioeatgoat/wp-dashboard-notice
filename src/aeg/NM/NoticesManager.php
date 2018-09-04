@@ -80,6 +80,8 @@ final class aeg_NM_NoticesManager {
 	 *
 	 * Acts on the dismiss link in the admin nag messages.
 	 * If clicked, the admin notice disappears and will no longer be visible to this user.
+	 *
+	 * @return bool|int
 	 */
 	public function notices_dismiss_listener() {
 		if ( ! isset( $_GET[ self::DISMISS_QUERY_ARG ] ) || ! check_admin_referer( self::DISMISS_QUERY_ARG . '-' . get_current_user_id() ) ) {
@@ -92,9 +94,7 @@ final class aeg_NM_NoticesManager {
 			return false;
 		}
 
-		$notice->dismiss();
-
-		return true;
+		return $notice->dismiss();
 	}
 
 	/**
