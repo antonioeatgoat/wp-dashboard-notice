@@ -36,7 +36,7 @@ $notice = ( new aeg_NM_NoticeFactory() )->create(
 		'dismiss_mode'   => 'global',
 		'status'         => 'success'
 	));
-aeg_NM_NoticesManager::init()->add($notice);
+aeg_NM_NoticesManager::init()->register_notice($notice);
 ```
 ## Parameters
 The notice creations needs three parameters:
