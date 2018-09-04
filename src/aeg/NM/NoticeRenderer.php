@@ -24,7 +24,7 @@ class aeg_NM_NoticeRenderer {
 	public function __construct( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
 		$this->notice   = $notice;
 		$this->priority = (int) $priority;
-		$this->template = ( empty ( $template ) ) ? dirname(__FILE__) . '/../../templates/notice.php' : (string) $template;
+		$this->template = ( empty ( $template ) ) ? dirname( __FILE__ ) . '/../../templates/notice.php' : (string) $template;
 	}
 
 	/**
@@ -33,7 +33,7 @@ class aeg_NM_NoticeRenderer {
 	 * @return bool
 	 */
 	public function render() {
-		if( $this->notice->is_dismissed() ) {
+		if ( $this->notice->is_dismissed() ) {
 			return false;
 		}
 
@@ -46,9 +46,9 @@ class aeg_NM_NoticeRenderer {
 	 * Prints the HTML of ot notice message
 	 */
 	public function print_notice_html() {
-	    if( ! $this->is_valid_template() ) {
-	        return;
-        }
+		if ( ! $this->is_valid_template() ) {
+			return;
+		}
 
 		$notice = $this->notice;
 
@@ -56,11 +56,11 @@ class aeg_NM_NoticeRenderer {
 	}
 
 	/**
-     * Checks if a template exists
-     *
+	 * Checks if a template exists
+	 *
 	 * @return bool
 	 */
 	private function is_valid_template() {
-	    return ( file_exists( $this->template ) );
-    }
+		return ( file_exists( $this->template ) );
+	}
 }
