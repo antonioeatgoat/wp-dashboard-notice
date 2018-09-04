@@ -11,7 +11,7 @@ class aeg_NM_NoticeRendererTest extends aeg_NM_UnitTestCase {
 
 	private $defaults = array(
 			'title'          => '',
-			'dismiss_anchor' => '',
+			'dismiss_text' => '',
 			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_anchor'     => '',
@@ -40,8 +40,8 @@ class aeg_NM_NoticeRendererTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_render_dismissed() {
-		$notice_mock = Mockery::mock( 'aeg_NM_Notice')->makePartial();
-		$notice_mock->shouldReceive( 'is_dismissed')->andReturnTrue();
+		$notice_mock = Mockery::mock( 'aeg_NM_Notice' )->makePartial();
+		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
 
 		$test = new aeg_NM_NoticeRenderer( $notice_mock );
 

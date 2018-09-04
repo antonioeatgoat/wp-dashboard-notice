@@ -32,7 +32,7 @@ $notice = ( new aeg_NM_NoticeFactory() )->create(
 		'show_close_btn' => true,
 		'cta_anchor'     => 'This is a custom CTA!',
 		'cta_href'       => '#',
-		'dismiss_anchor' => "Don't show it again",
+		'dismiss_text' => "Don't show it again",
 		'dismiss_mode'   => 'global',
 		'status'         => 'success'
 	));
@@ -58,7 +58,7 @@ The notice message can be dismissed permanently, clicking on a specific link. It
 - **user:** Once dismissed, the notice message is dismissed only for the current user. Other users will continue to see it.
 
 You can print the dismissing link using these arguments, both of them are required to display the link.
-- **dismiss_anchor:** The text of the link.
+- **dismiss_text:** The text of the link.
 - **dismiss_mode:** The dismissing mode explained above.
 
 ### Others

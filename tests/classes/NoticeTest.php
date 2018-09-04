@@ -11,7 +11,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 
 	private $defaults = array(
 			'title'          => '',
-			'dismiss_anchor' => '',
+			'dismiss_text'   => '',
 			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_anchor'     => '',
@@ -51,11 +51,11 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		$this->assertEquals( $expected, $test->get_title() );
 	}
 
-	public function test_get_dismiss_anchor() {
+	public function test_get_dismiss_text() {
 		$expected = 'This is a dismiss anchor';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_anchor' => $expected ] );
+		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_text' => $expected ] );
 
-		$this->assertEquals( $expected, $test->get_dismiss_anchor() );
+		$this->assertEquals( $expected, $test->get_dismiss_text() );
 	}
 
 	public function test_get_show_close_btn() {
@@ -91,7 +91,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_dismiss_mode( $mode, $expected ) {
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => $mode ] );
+		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => $mode ] );
 
 		$this->assertEquals( $expected, $test->get_dismiss_mode() );
 	}
@@ -115,7 +115,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_status( $status, $expected ) {
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'status' => $status ] );
+		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'status' => $status ] );
 
 		$this->assertEquals( $expected, $test->get_status() );
 	}
@@ -138,8 +138,8 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 		\WP_Mock::userFunction( 'add_query_arg', array(
-				'times' => 1,
-				'args' => array( 'aeg-notice-manager-dismiss', 'notice-test' ),
+				'times'  => 1,
+				'args'   => array( 'aeg-notice-manager-dismiss', 'notice-test' ),
 				'return' => 'aeg-notice-manager-dismiss=notice-test'
 		) );
 
@@ -166,7 +166,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		) );
 
 		\WP_Mock::userFunction( 'update_user_meta', array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => true
 		) );
 
@@ -185,7 +185,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		) );
 
 		WP_Mock::userFunction( 'update_option', array(
-				'times' => 2,
+				'times'  => 2,
 				'return' => true
 		) );
 
@@ -204,7 +204,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		) );
 
 		\WP_Mock::userFunction( 'update_user_meta', array(
-				'times' => 1,
+				'times'  => 1,
 				'return' => true
 		) );
 
@@ -225,7 +225,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		) );
 
 		\WP_Mock::userFunction( 'update_option', array(
-				'times' => 1,
+				'times'  => 1,
 				'return' => true
 		) );
 

@@ -23,7 +23,7 @@ class aeg_NM_Notice {
 	 */
 	private $defaults = array(
 			'title'          => '',
-			'dismiss_anchor' => '',
+			'dismiss_text'   => '',
 			'dismiss_mode'   => self::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_anchor'     => '',
@@ -101,8 +101,8 @@ class aeg_NM_Notice {
 	/**
 	 * @return string
 	 */
-	public function get_dismiss_anchor() {
-		return $this->args['dismiss_anchor'];
+	public function get_dismiss_text() {
+		return $this->args['dismiss_text'];
 	}
 
 	/**
@@ -153,12 +153,12 @@ class aeg_NM_Notice {
 	 * @return bool|int. True if the notice has been dismissed. False if it failed. 0 if the notice wasn't dismissible
 	 */
 	public function dismiss() {
-		if( self::DISMISS_NONE === $this->get_dismiss_mode() ) {
+		if ( self::DISMISS_NONE === $this->get_dismiss_mode() ) {
 			return 0;
 		}
 
 		$dismissed_notices = aeg_NM_NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
-		$new_option = array_merge( $dismissed_notices, array( $this->get_id() ) );
+		$new_option        = array_merge( $dismissed_notices, array( $this->get_id() ) );
 
 		if ( self::DISMISS_GLOBAL === $this->get_dismiss_mode() ) {
 			return $this->dismiss_global_notice( $new_option );
@@ -184,7 +184,7 @@ class aeg_NM_Notice {
 	 * @return bool
 	 */
 	private function dismiss_user_notice( $new_option ) {
-		return (bool)update_user_meta( get_current_user_id(), aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option );
+		return (bool) update_user_meta( get_current_user_id(), aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option );
 	}
 
 	/**

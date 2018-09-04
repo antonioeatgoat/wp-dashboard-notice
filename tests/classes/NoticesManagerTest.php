@@ -11,7 +11,7 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 
 	private $defaults = array(
 			'title'          => '',
-			'dismiss_anchor' => '',
+			'dismiss_text'   => '',
 			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_anchor'     => '',
@@ -48,15 +48,15 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_notices_dismiss_listener() {
-		$_GET[ 'aeg-notice-manager-dismiss' ] = 'notice-test';
+		$_GET['aeg-notice-manager-dismiss'] = 'notice-test';
 		\WP_Mock::userFunction( 'check_admin_referer', array( 'return' => true ) );
 
 		$test = aeg_NM_NoticesManager::init();
 
-		$notice_mock = Mockery::spy( 'aeg_NM_Notice')->shouldIgnoreMissing();
-		$notice_mock->shouldReceive( 'dismiss')->andReturnTrue();
-		$notice_mock->shouldReceive( 'is_dismissed')->andReturnTrue();
-		$notice_mock->shouldReceive( 'get_id')->andReturn( 'notice-test' );
+		$notice_mock = Mockery::spy( 'aeg_NM_Notice' )->shouldIgnoreMissing();
+		$notice_mock->shouldReceive( 'dismiss' )->andReturnTrue();
+		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
+		$notice_mock->shouldReceive( 'get_id' )->andReturn( 'notice-test' );
 
 		$test->add( $notice_mock );
 
@@ -72,10 +72,10 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 
 		$test = aeg_NM_NoticesManager::init();
 
-		$notice_mock = Mockery::spy( 'aeg_NM_Notice')->shouldIgnoreMissing();
-		$notice_mock->shouldReceive( 'dismiss')->andReturnTrue();
-		$notice_mock->shouldReceive( 'is_dismissed')->andReturnTrue();
-		$notice_mock->shouldReceive( 'get_id')->andReturn( 'notice-test' );
+		$notice_mock = Mockery::spy( 'aeg_NM_Notice' )->shouldIgnoreMissing();
+		$notice_mock->shouldReceive( 'dismiss' )->andReturnTrue();
+		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
+		$notice_mock->shouldReceive( 'get_id' )->andReturn( 'notice-test' );
 
 		$test->add( $notice_mock );
 
@@ -84,9 +84,9 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 
 	public function provider_notices_dismiss_listener_false() {
 		return array(
-			array( array( 'aeg-notice-manager-dismiss' => 'fake-id'), true ),
-			array( array( 'aeg-notice-manager-dismiss' => 'notice-test'), false ),
-			array( array( 'aeg-notice-manager-dismiss' => 'fake-id'), false ),
+				array( array( 'aeg-notice-manager-dismiss' => 'fake-id' ), true ),
+				array( array( 'aeg-notice-manager-dismiss' => 'notice-test' ), false ),
+				array( array( 'aeg-notice-manager-dismiss' => 'fake-id' ), false ),
 		);
 	}
 }
