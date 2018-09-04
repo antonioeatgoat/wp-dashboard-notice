@@ -57,7 +57,7 @@ final class aeg_NM_NoticesManager {
 	 * @param int           $priority
 	 * @param string        $template
 	 */
-	public function add( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
+	public function register_notice( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
 		$this->notices[ $notice->get_id() ] = [
 				'notice'   => $notice,
 				'priority' => $priority,

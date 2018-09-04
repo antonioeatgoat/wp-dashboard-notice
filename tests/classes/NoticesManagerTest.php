@@ -42,7 +42,7 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 
 		$notice = ( new aeg_NM_NoticeFactory() )->create( 'hello-world', 'Hello World' );
 
-		$test->add( $notice );
+		$test->register_notice( $notice );
 
 		$this->assertEquals( $notice, $test->get_notice( 'hello-world' ) );
 	}
@@ -58,7 +58,7 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
 		$notice_mock->shouldReceive( 'get_id' )->andReturn( 'notice-test' );
 
-		$test->add( $notice_mock );
+		$test->register_notice( $notice_mock );
 
 		$this->assertTrue( $test->notices_dismiss_listener() );
 	}
@@ -77,7 +77,7 @@ class aeg_NM_NoticesManagerTest extends aeg_NM_UnitTestCase {
 		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
 		$notice_mock->shouldReceive( 'get_id' )->andReturn( 'notice-test' );
 
-		$test->add( $notice_mock );
+		$test->register_notice( $notice_mock );
 
 		$this->assertFalse( $test->notices_dismiss_listener() );
 	}
