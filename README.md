@@ -29,10 +29,11 @@ $notice = ( new NoticeFactory() )->create(
 	'hello-world-notice',
 	'<strong>Hello World</strong> - This is a sample notice',
 	array(
+		'title'          => 'This is a sample title',  
 		'show_close_btn' => true,
-		'cta_text'     => 'This is a custom CTA!',
+		'cta_text'       => 'This is a custom CTA!',
 		'cta_href'       => '#',
-		'dismiss_text' => "Don't show it again",
+		'dismiss_text'   => "Don't show it again",
 		'dismiss_mode'   => 'global',
 		'status'         => 'success'
 	));
@@ -63,5 +64,6 @@ You can print the dismissing link using these arguments, both of them are requir
 
 ### Others
 Other arguments of the parameters array are:
+- **Title:** *(string)* An eventual title, displayed above the message.
 - **status:** The status the notice message. Available values are *"info" (default)*, *"success"*, *"warning"*, *"error"*.
 - **show_close_btn:** *(bool)* Default *false*. If a button to close the notice message is displayed. **Notce:** This will only close the notice, not dismiss it. On the page refresh it will be displayed again if the code requires it. This is useful when you have a "single time" notice message. That haven't stands permanently on the page, such as the notice message "Plugin activated" when you active a plugin.
