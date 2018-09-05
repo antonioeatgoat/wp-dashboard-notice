@@ -1,5 +1,7 @@
 <?php
 
+namespace Aeg\DashboardNotice;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * It lists all the existing notices and checks when notices have to be displayed or dismissed.
  */
-final class aeg_NM_NoticesManager {
+final class NoticesManager {
 
 	const DISMISS_QUERY_ARG = 'aeg-notice-manager-dismiss';
 
@@ -16,18 +18,18 @@ final class aeg_NM_NoticesManager {
 	private $notices = [];
 
 	/**
-	 * @var aeg_NM_NoticesManager|null
+	 * @var NoticesManager|null
 	 */
 	private static $instance = null;
 
 	/**
-	 * @return aeg_NM_NoticesManager
+	 * @return NoticesManager
 	 *
 	 * @codeCoverageIgnore
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
-			self::$instance = new aeg_NM_NoticesManager();
+			self::$instance = new NoticesManager();
 		}
 
 		return self::$instance;
@@ -43,7 +45,7 @@ final class aeg_NM_NoticesManager {
 	}
 
 	/**
-	 * aeg_NM_NoticesManager constructor.
+	 * NoticesManager constructor.
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -53,11 +55,11 @@ final class aeg_NM_NoticesManager {
 	}
 
 	/**
-	 * @param aeg_NM_Notice $notice
+	 * @param Notice $notice
 	 * @param int           $priority
 	 * @param string        $template
 	 */
-	public function register_notice( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
+	public function register_notice( Notice $notice, $priority = 10, $template = '' ) {
 		$this->notices[ $notice->get_id() ] = [
 				'notice'   => $notice,
 				'priority' => $priority,
@@ -70,7 +72,7 @@ final class aeg_NM_NoticesManager {
 	 */
 	public function print_notices() {
 		foreach ( $this->notices as $notice_data ) {
-			$rendered = new aeg_NM_NoticeRenderer( $notice_data['notice'], $notice_data['priority'], $notice_data['template'] );
+			$rendered = new NoticeRenderer( $notice_data['notice'], $notice_data['priority'], $notice_data['template'] );
 			$rendered->render();
 		}
 	}
@@ -90,7 +92,7 @@ final class aeg_NM_NoticesManager {
 
 		$notice = $this->get_notice( $_GET[ self::DISMISS_QUERY_ARG ] );
 
-		if ( ! $notice instanceof aeg_NM_Notice ) {
+		if ( ! $notice instanceof Notice ) {
 			return false;
 		}
 
@@ -100,7 +102,7 @@ final class aeg_NM_NoticesManager {
 	/**
 	 * @param string $notice_id
 	 *
-	 * @return null|aeg_NM_Notice
+	 * @return null|Notice
 	 */
 	public function get_notice( $notice_id ) {
 		if ( isset( $this->notices[ $notice_id ] ) ) {
@@ -121,9 +123,9 @@ final class aeg_NM_NoticesManager {
 	public static function get_dismissed_options( $dismiss_mode ) {
 		$dismissed_notices = array();
 
-		if ( aeg_NM_Notice::DISMISS_GLOBAL === $dismiss_mode ) {
+		if ( Notice::DISMISS_GLOBAL === $dismiss_mode ) {
 			$dismissed_notices = get_option( self::DISMISSED_NOTICES_OPTION );
-		} else if ( aeg_NM_Notice::DISMISS_USER === $dismiss_mode ) {
+		} else if ( Notice::DISMISS_USER === $dismiss_mode ) {
 			$dismissed_notices = get_user_meta( get_current_user_id(), self::DISMISSED_NOTICES_OPTION, true );
 		}
 

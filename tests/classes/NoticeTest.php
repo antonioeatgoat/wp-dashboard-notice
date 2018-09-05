@@ -1,5 +1,8 @@
 <?php
 
+use Aeg\DashboardNotice\Notice;
+use Aeg\DashboardNotice\NoticeFactory;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,16 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The actual notice that will be displayed in the dashboard.
  */
-class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
+class NoticeTest extends aeg_NM_UnitTestCase {
 
 	private $defaults = array(
 			'title'          => '',
 			'dismiss_text'   => '',
-			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
+			'dismiss_mode'   => Notice::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_text'     => '',
 			'cta_href'       => '',
-			'status'         => aeg_NM_Notice::STATUS_INFO,
+			'status'         => Notice::STATUS_INFO,
 			'custom_class'   => ''
 	);
 
@@ -32,54 +35,54 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 
 	public function test_get_id() {
 		$expected = 'notice-test';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( $expected, 'Hello World' );
+		$test     = ( new NoticeFactory() )->create( $expected, 'Hello World' );
 
 		$this->assertEquals( $expected, $test->get_id() );
 	}
 
 	public function test_get_message() {
 		$expected = 'Hello World';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', $expected );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', $expected );
 
 		$this->assertEquals( $expected, $test->get_message() );
 	}
 
 	public function test_get_title() {
 		$expected = 'This is a title';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'title' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'title' => $expected ] );
 
 		$this->assertEquals( $expected, $test->get_title() );
 	}
 
 	public function test_get_dismiss_text() {
 		$expected = 'This is a dismiss anchor';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_text' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_text' => $expected ] );
 
 		$this->assertEquals( $expected, $test->get_dismiss_text() );
 	}
 
 	public function test_get_show_close_btn() {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'show_close_btn' => true ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'show_close_btn' => true ] );
 		$this->assertTrue( $test->get_show_close_btn() );
 	}
 
 	public function test_get_cta_text() {
 		$expected = 'This is a CTA';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_text' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_text' => $expected ] );
 
 		$this->assertEquals( $expected, $test->get_cta_text() );
 	}
 
 	public function test_get_cta_href() {
 		$expected = '#';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_href' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_href' => $expected ] );
 
 		$this->assertEquals( $expected, $test->get_cta_href() );
 	}
 
 	public function test_get_custom_class() {
 		$expected = 'custom-class';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'custom_class' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'custom_class' => $expected ] );
 
 		$this->assertEquals( $expected, $test->get_custom_class() );
 	}
@@ -91,7 +94,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_dismiss_mode( $mode, $expected ) {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => $mode ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => $mode ] );
 
 		$this->assertEquals( $expected, $test->get_dismiss_mode() );
 	}
@@ -115,7 +118,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_status( $status, $expected ) {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'status' => $status ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'status' => $status ] );
 
 		$this->assertEquals( $expected, $test->get_status() );
 	}
@@ -144,20 +147,20 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 		) );
 
 		$expected = 'aeg-notice-manager-dismiss=notice-test';
-		$test     = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message' );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message' );
 
 		$this->assertContains( $expected, $test->get_dismiss_url() );
 	}
 
 	public function test_useless_dismiss() {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message' );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message' );
 
 		$this->assertEquals( 0, $test->dismiss() );
 	}
 
 	public function test_dismiss_by_user() {
-		$test1 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'user' ] );
-		$test2 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'user' ] );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
@@ -175,8 +178,8 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_dismiss_by_global() {
-		$test1 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'global' ] );
-		$test2 = ( new aeg_NM_NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'global' ] );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
@@ -195,7 +198,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_is_dismiss_by_user() {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'user' ] );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
@@ -216,7 +219,7 @@ class aeg_NM_NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_is_dismiss_by_global() {
-		$test = ( new aeg_NM_NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'global' ] );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 

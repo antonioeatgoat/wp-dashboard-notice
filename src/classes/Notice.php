@@ -1,5 +1,7 @@
 <?php
 
+namespace Aeg\DashboardNotice;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The actual notice that will be displayed in the dashboard.
  */
-class aeg_NM_Notice {
+class Notice {
 
 	const STATUS_INFO = 'info';
 	const STATUS_ERROR = 'error';
@@ -43,7 +45,7 @@ class aeg_NM_Notice {
 	private $message;
 
 	/**
-	 * aeg_NM_Notice constructor.
+	 * Notice constructor.
 	 *
 	 * @param string $id             An unique identified for the notice message
 	 * @param string $message        The message of the notice.
@@ -109,7 +111,7 @@ class aeg_NM_Notice {
 	 * @return string
 	 */
 	public function get_dismiss_url() {
-		return esc_url( wp_nonce_url( add_query_arg( aeg_NM_NoticesManager::DISMISS_QUERY_ARG, $this->get_id() ), aeg_NM_NoticesManager::DISMISS_QUERY_ARG . '-' . get_current_user_id() ) );
+		return esc_url( wp_nonce_url( add_query_arg( NoticesManager::DISMISS_QUERY_ARG, $this->get_id() ), NoticesManager::DISMISS_QUERY_ARG . '-' . get_current_user_id() ) );
 	}
 
 	/**
@@ -157,7 +159,7 @@ class aeg_NM_Notice {
 			return 0;
 		}
 
-		$dismissed_notices = aeg_NM_NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
+		$dismissed_notices = NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
 		$new_option        = array_merge( $dismissed_notices, array( $this->get_id() ) );
 
 		if ( self::DISMISS_GLOBAL === $this->get_dismiss_mode() ) {
@@ -175,7 +177,7 @@ class aeg_NM_Notice {
 	 * @return bool
 	 */
 	private function dismiss_global_notice( $new_option ) {
-		return update_option( aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option, false );
+		return update_option( NoticesManager::DISMISSED_NOTICES_OPTION, $new_option, false );
 	}
 
 	/**
@@ -184,7 +186,7 @@ class aeg_NM_Notice {
 	 * @return bool
 	 */
 	private function dismiss_user_notice( $new_option ) {
-		return (bool) update_user_meta( get_current_user_id(), aeg_NM_NoticesManager::DISMISSED_NOTICES_OPTION, $new_option );
+		return (bool) update_user_meta( get_current_user_id(), NoticesManager::DISMISSED_NOTICES_OPTION, $new_option );
 	}
 
 	/**
@@ -193,7 +195,7 @@ class aeg_NM_Notice {
 	 * @return bool
 	 */
 	public function is_dismissed() {
-		$dismissed_notices = aeg_NM_NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
+		$dismissed_notices = NoticesManager::get_dismissed_options( $this->get_dismiss_mode() );
 
 		$is_dismissed = ( in_array( $this->get_id(), $dismissed_notices ) );
 

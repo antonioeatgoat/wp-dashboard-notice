@@ -1,5 +1,9 @@
 <?php
 
+use Aeg\DashboardNotice\Notice;
+use Aeg\DashboardNotice\NoticeFactory;
+use Aeg\DashboardNotice\NoticeRenderer;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,16 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * The actual notice that will be displayed in the dashboard.
  */
-class aeg_NM_NoticeRendererTest extends aeg_NM_UnitTestCase {
+class NoticeRendererTest extends aeg_NM_UnitTestCase {
 
 	private $defaults = array(
 			'title'          => '',
 			'dismiss_text' => '',
-			'dismiss_mode'   => aeg_NM_Notice::DISMISS_NONE,
+			'dismiss_mode'   => Notice::DISMISS_NONE,
 			'show_close_btn' => false,
 			'cta_text'     => '',
 			'cta_href'       => '',
-			'status'         => aeg_NM_Notice::STATUS_INFO,
+			'status'         => Notice::STATUS_INFO,
 			'custom_class'   => ''
 	);
 
@@ -31,60 +35,54 @@ class aeg_NM_NoticeRendererTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_render() {
-		$notice_mock = Mockery::mock( 'aeg_NM_Notice')->makePartial();
+		$notice_mock = Mockery::mock( 'Aeg\DashboardNotice\Notice')->makePartial();
 		$notice_mock->shouldReceive( 'is_dismissed')->andReturnFalse();
 
-		$test = new aeg_NM_NoticeRenderer( $notice_mock );
+		$test = new NoticeRenderer( $notice_mock );
 
 		$this->assertTrue( $test->render() );
 	}
 
 	public function test_render_dismissed() {
-		$notice_mock = Mockery::mock( 'aeg_NM_Notice' )->makePartial();
+		$notice_mock = Mockery::mock( 'Aeg\DashboardNotice\Notice' )->makePartial();
 		$notice_mock->shouldReceive( 'is_dismissed' )->andReturnTrue();
 
-		$test = new aeg_NM_NoticeRenderer( $notice_mock );
+		$test = new NoticeRenderer( $notice_mock );
 
 		$this->assertFalse( $test->render() );
 	}
 
 	public function test_print_notice_html() {
-		$notice_mock = Mockery::mock( 'aeg_NM_Notice')->makePartial();
-		$notice_mock->shouldReceive( 'is_dismissed')->andReturnTrue();
-
-		$notice = ( new aeg_NM_NoticeFactory() )->create(
+		$notice = ( new NoticeFactory() )->create(
 				'notice-test',
 				'Hello World',
 				array(
 						'title' => 'Title'
 				));
 
-		$test = new aeg_NM_NoticeRenderer( $notice );
+		$test = new NoticeRenderer( $notice );
 
 		ob_start();
 		$test->print_notice_html();
-		$stirng = ob_get_clean();
+		$string = ob_get_clean();
 
-		$this->assertStringEqualsFile(dirname(__FILE__) . '/../templates/test_print_notice_html.php', $stirng );
+		$this->assertStringEqualsFile(dirname(__FILE__) . '/../templates/test_print_notice_html.php', $string );
 	}
 
 	public function test_print_notice_html_not_valid_template() {
-		$notice_mock = Mockery::mock( 'aeg_NM_Notice')->makePartial();
-		$notice_mock->shouldReceive( 'is_dismissed')->andReturnTrue();
-
-		$notice = ( new aeg_NM_NoticeFactory() )->create(
+		$notice = ( new NoticeFactory() )->create(
 				'notice-test',
 				'Hello World',
 				array(
 						'title' => 'Title'
 				));
 
-		$test = new aeg_NM_NoticeRenderer( $notice, 10, 'fake' );
+		$test = new NoticeRenderer( $notice, 10, 'fake' );
 
 		ob_start();
 		$test->print_notice_html();
-		$stirng = ob_get_clean();
+		$string = ob_get_clean();
 
-		$this->assertEmpty( $stirng );
+		$this->assertEmpty( $string );
 	}
 }
