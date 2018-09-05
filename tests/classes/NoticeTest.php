@@ -49,40 +49,40 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 
 	public function test_get_title() {
 		$expected = 'This is a title';
-		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'title' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'title' => $expected ) );
 
 		$this->assertEquals( $expected, $test->get_title() );
 	}
 
 	public function test_get_dismiss_text() {
 		$expected = 'This is a dismiss anchor';
-		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_text' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'dismiss_text' => $expected ) );
 
 		$this->assertEquals( $expected, $test->get_dismiss_text() );
 	}
 
 	public function test_get_show_close_btn() {
-		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'show_close_btn' => true ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'show_close_btn' => true ) );
 		$this->assertTrue( $test->get_show_close_btn() );
 	}
 
 	public function test_get_cta_text() {
 		$expected = 'This is a CTA';
-		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_text' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'cta_text' => $expected ) );
 
 		$this->assertEquals( $expected, $test->get_cta_text() );
 	}
 
 	public function test_get_cta_href() {
 		$expected = '#';
-		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'cta_href' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'cta_href' => $expected ) );
 
 		$this->assertEquals( $expected, $test->get_cta_href() );
 	}
 
 	public function test_get_custom_class() {
 		$expected = 'custom-class';
-		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'custom_class' => $expected ] );
+		$test     = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'custom_class' => $expected ) );
 
 		$this->assertEquals( $expected, $test->get_custom_class() );
 	}
@@ -94,7 +94,7 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_dismiss_mode( $mode, $expected ) {
-		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => $mode ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'dismiss_mode' => $mode ) );
 
 		$this->assertEquals( $expected, $test->get_dismiss_mode() );
 	}
@@ -103,12 +103,12 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	 * @return array
 	 */
 	public function provider_get_dismiss_mode() {
-		return [
-				[ 'global', 'global' ],
-				[ 'user', 'user' ],
-				[ 'none', 'none' ],
-				[ 'fake', 'none' ]
-		];
+		return array(
+				array( 'global', 'global' ),
+				array( 'user', 'user' ),
+				array( 'none', 'none' ),
+				array( 'fake', 'none' )
+		);
 	}
 
 	/**
@@ -118,7 +118,7 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	 * @param string $expected
 	 */
 	public function test_get_status( $status, $expected ) {
-		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'status' => $status ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'status' => $status ) );
 
 		$this->assertEquals( $expected, $test->get_status() );
 	}
@@ -127,13 +127,13 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	 * @return array
 	 */
 	public function provider_get_status() {
-		return [
-				[ 'info', 'info' ],
-				[ 'success', 'success' ],
-				[ 'warning', 'warning' ],
-				[ 'error', 'error' ],
-				[ 'fake', 'info' ]
-		];
+		return array(
+				array( 'info', 'info' ),
+				array( 'success', 'success' ),
+				array( 'warning', 'warning' ),
+				array( 'error', 'error' ),
+				array( 'fake', 'info' )
+		);
 	}
 
 	public function test_get_dismiss_url() {
@@ -159,13 +159,13 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_dismiss_by_user() {
-		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'user' ] );
-		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', array( 'dismiss_mode' => 'user' ) );
+		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', array( 'dismiss_mode' => 'user' ) );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
 		\WP_Mock::userFunction( 'get_user_meta', array(
-				'return_in_order' => array( false, [ 'notice-test-1' ] )
+				'return_in_order' => array( false, array( 'notice-test-1' ) )
 		) );
 
 		\WP_Mock::userFunction( 'update_user_meta', array(
@@ -178,13 +178,13 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_dismiss_by_global() {
-		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', [ 'dismiss_mode' => 'global' ] );
-		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test1 = ( new NoticeFactory() )->create( 'notice-test-1', 'Message', array( 'dismiss_mode' => 'global' ) );
+		$test2 = ( new NoticeFactory() )->create( 'notice-test-2', 'Message', array( 'dismiss_mode' => 'global' ) );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
 		\WP_Mock::userFunction( 'get_option', array(
-				'return_in_order' => array( false, [ 'notice-test-1' ] )
+				'return_in_order' => array( false, array( 'notice-test-1' ) )
 		) );
 
 		WP_Mock::userFunction( 'update_option', array(
@@ -198,12 +198,12 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_is_dismiss_by_user() {
-		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'user' ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'dismiss_mode' => 'user' ) );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
 		\WP_Mock::userFunction( 'get_user_meta', array(
-				'return_in_order' => array( false, [ 'notice-test' ] )
+				'return_in_order' => array( false, array( 'notice-test' ) )
 		) );
 
 		\WP_Mock::userFunction( 'update_user_meta', array(
@@ -219,12 +219,12 @@ class NoticeTest extends aeg_NM_UnitTestCase {
 	}
 
 	public function test_is_dismiss_by_global() {
-		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', [ 'dismiss_mode' => 'global' ] );
+		$test = ( new NoticeFactory() )->create( 'notice-test', 'Message', array( 'dismiss_mode' => 'global' ) );
 
 		\WP_Mock::userFunction( 'get_current_user_id', array( 'return' => 1 ) );
 
 		\WP_Mock::userFunction( 'get_option', array(
-				'return_in_order' => array( false, [ 'notice-test' ] )
+				'return_in_order' => array( false, array( 'notice-test' ) )
 		) );
 
 		\WP_Mock::userFunction( 'update_option', array(
