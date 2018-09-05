@@ -15,7 +15,7 @@ final class NoticesManager {
 
 	const DISMISSED_NOTICES_OPTION = 'aeg-dismissed-notices';
 
-	private $notices = [];
+	private $notices = array();
 
 	/**
 	 * @var NoticesManager|null
