@@ -1,5 +1,8 @@
 <?php
 
+namespace Aeg\DashboardNotice;
+
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -7,24 +10,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * It takes care of the displaying of a single given notice on the dashboard page
  */
-class aeg_NM_NoticeRenderer {
+class NoticeRenderer {
 
 	/**
-	 * @var aeg_NM_Notice
+	 * @var Notice
 	 */
 	private $notice;
 
 	/**
-	 * aeg_NM_NoticeRenderer constructor.
+	 * NoticeRenderer constructor.
 	 *
-	 * @param aeg_NM_Notice $notice
+	 * @param Notice $notice
 	 * @param int           $priority
 	 * @param string        $template
 	 */
-	public function __construct( aeg_NM_Notice $notice, $priority = 10, $template = '' ) {
+	public function __construct( Notice $notice, $priority = 10, $template = '' ) {
 		$this->notice   = $notice;
 		$this->priority = (int) $priority;
-		$this->template = ( empty ( $template ) ) ? dirname( __FILE__ ) . '/../../templates/notice.php' : (string) $template;
+		$this->template = ( empty ( $template ) ) ? dirname( __FILE__ ) . '/../templates/notice.php' : (string) $template;
 	}
 
 	/**

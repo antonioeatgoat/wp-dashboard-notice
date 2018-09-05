@@ -25,7 +25,7 @@ Where `path/to/wp-dashboard-notice/autoload.php` is the absolute path to the `au
 ## Example
 
 ```php
-$notice = ( new aeg_NM_NoticeFactory() )->create(
+$notice = ( new NoticeFactory() )->create(
 	'hello-world-notice',
 	'<strong>Hello World</strong> - This is a sample notice',
 	array(
@@ -36,7 +36,7 @@ $notice = ( new aeg_NM_NoticeFactory() )->create(
 		'dismiss_mode'   => 'global',
 		'status'         => 'success'
 	));
-aeg_NM_NoticesManager::init()->register_notice($notice);
+NoticesManager::init()->register_notice($notice);
 ```
 ## Parameters
 The notice creations needs three parameters:

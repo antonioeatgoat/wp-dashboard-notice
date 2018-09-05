@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * @var aeg_NM_Notice $notice
+ * @var Notice $notice
  */
 
 $css_clases = 'notice-' . $notice->get_status();
